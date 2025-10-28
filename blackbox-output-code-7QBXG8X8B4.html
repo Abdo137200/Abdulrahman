@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>QR Code Generator</h1>
+        <a href="index.html">Back to Home</a>
+    </header>
+    <main>
+        <div class="tool-container">
+            <input type="text" id="text-input" placeholder="Enter text or URL">
+            <button id="generate-btn">Generate QR Code</button>
+            <div id="qrcode"></div>
+        </div>
+    </main>
+    <script>
+        document.getElementById('generate-btn').addEventListener('click', () => {
+            const text = document.getElementById('text-input').value;
+            if (!text) return alert('Please enter text.');
+            document.getElementById('qrcode').innerHTML = '';
+            QRCode.toCanvas(document.getElementById('qrcode'), text, error => {
+                if (error) console.error(error);
+            });
+        });
+    </script>
+</body>
+</html>

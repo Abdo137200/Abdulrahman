@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Word Counter</h1>
+        <a href="index.html">Back to Home</a>
+    </header>
+    <main>
+        <div class="tool-container">
+            <textarea id="text-area" placeholder="Type your text here..."></textarea>
+            <p>Words: <span id="word-count">0</span></p>
+            <p>Characters: <span id="char-count">0</span></p>
+        </div>
+    </main>
+    <script>
+        const textarea = document.getElementById('text-area');
+        const wordCount = document.getElementById('word-count');
+        const charCount = document.getElementById('char-count');
+        textarea.addEventListener('input', () => {
+            const text = textarea.value;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            wordCount.textContent = words;
+            charCount.textContent = text.length;
+        });
+    </script>
+</body>
+</html>

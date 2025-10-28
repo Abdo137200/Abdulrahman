@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Word Converter</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-parse/1.1.1/pdf-parse.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>PDF to Word Converter</h1>
+        <a href="index.html">Back to Home</a>
+    </header>
+    <main>
+        <div class="tool-container">
+            <input type="file" id="pdf-input" accept=".pdf">
+            <button id="convert-btn">Convert</button>
+            <textarea id="output" placeholder="Converted text will appear here..." readonly></textarea>
+            <button id="download-btn" style="display:none;">Download as TXT</button>
+        </div>
+    </main>
+    <script>
+        document.getElementById('convert-btn').addEventListener('click', async () => {
+            const file = document.getElementById('pdf-input').files[0];
+            if (!file) return alert('Please select a PDF file.');
+            const arrayBuffer = await file.arrayBuffer();
+            const data = await pdfParse(new Uint8Array(arrayBuffer));
+            document.getElementById('output').value = data.text;
+            document.getElementById('download-btn').style.display = 'block';
+        });
+        document.getElementById('download-btn').addEventListener('click', () => {
+            const text = document.getElementById('output').value;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'converted.txt';
+            a.click();
+        });
+    </script>
+</body>
+</html>
